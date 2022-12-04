@@ -61,7 +61,7 @@ button {
     width: 30%;
     height: 30px;
     margin-right: 10px;
-    background: rgb(133, 168, 248);
+    background: rgba(86, 101, 137, 0.268);
     color: rgb(14, 1, 78);
     border: none;
 }

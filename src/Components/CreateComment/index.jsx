@@ -12,7 +12,6 @@ const index = () => {
     const handleClick = (e) => {
 
 
-    if (e.keyCode == 13 ) {
         e.preventDefault()
         if(!comment){
             return alert("Please Write Something...")
@@ -28,19 +27,19 @@ const index = () => {
             }
             dispatch(createPost(data))
             setComment("")
-        }
+        
 
     }
   return (
     <div>
-        <form >
-            <textarea 
-            onKeyDown={handleClick} 
+        <form  onSubmit={handleClick}>
+            <input  
             type="text" 
             placeholder='Make Comment'
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             />
+            <button type='submit'> Send</button>
         </form>
     </div>
   )

@@ -7,10 +7,9 @@ import "./PostCard.css";
 const PostCard = ({ comment }) => {
   const dispatch = useDispatch();
   const [reply, setReply] = useState("");
+  const [isReplying, setIsReplyling] = useState(false)
 
-  const handleClick = (e) => {
-    if (e.keyCode == 13) {
-      e.preventDefault();
+  const handleClick = () => {
       if (!reply.length) {
         return alert("Please write something");
       }
@@ -26,7 +25,7 @@ const PostCard = ({ comment }) => {
       };
       dispatch(commentReply(data));
       setReply("");
-    }
+    
   };
 
   const likeClick = (e) => {
@@ -45,29 +44,41 @@ const PostCard = ({ comment }) => {
             <p>{comment.text}</p>
           </div>
 
-          <div className="comment-container">
+
+          <div className="buttons">
+          <div className="time-reply">
+            <p>Replies: {comment.replies.length}</p>
+          </div>
+            <p className="comment-time">{comment.time}</p>
+            <div onClick={likeClick}>
+              {comment.likes.length > 0 ? comment.likes.length : ""} UpVotes
+            </div>
+          </div>
+        </div>
+        <button onClick={() => setIsReplyling(!isReplying)} className='sub-comments'> 
+        
+        Reply
+
+        </button>
+        {
+          isReplying ? (
+            <div className="comment-container">
             <input
               className="comment-input"
               type="text"
               placeholder="Make Comment"
-              onKeyDown={handleClick}
               value={reply}
               onChange={(e) => setReply(e.target.value)}
             />
-            <button onClick={handleClick} type="submit">
+            <button onClick={handleClick} >
               Send
             </button>
           </div>
-          <div className="buttons">
-          <div className="time-reply">
-            <p>Comment Replies: {comment.replies.length}</p>
-          </div>
-            <p className="comment-time">{comment.time}</p>
-            <div onClick={likeClick}>
-              {comment.likes.length > 0 ? comment.likes.length : ""} Like
-            </div>
-          </div>
-        </div>
+          )
+          :
+          null
+        }
+
         {comment.replies?.map((comment) => (
           <PostCard key={comment.id} comment={comment} />
         ))}
